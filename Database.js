@@ -32,9 +32,8 @@ export const insertCita = (cita) =>{
 export const readCitas = async() =>{
     try {
         const allCitas =  await db.getAllAsync('SELECT * FROM cita');
-        console.log("...");
         for(const row of allCitas){
-            console.log(row.id, row.cliente, row.fecha); //en este caso todo se va con el await lolololol
+            //console.log(row.id, row.cliente, row.fecha); //en este caso todo se va con el await lolololol
         }
         //allCitas.forEach(row =>{console.log(row.id, row.cliente);});
         
@@ -48,9 +47,6 @@ export const readCitasOrder = async(dateVar) =>{
     let allCitas;
     try {
         allCitas =  await db.getAllAsync('SELECT * FROM cita WHERE fecha >= $fechaAct ORDER BY fecha ASC', {$fechaAct: dateVar});
-        for(const row of allCitas){
-            console.log(row.id, row.cliente, row.fecha); //en este caso todo se va con el await lolololol
-        }
         //allCitas.forEach(row =>{console.log(row.id, row.cliente);});
         
     } catch(error){
@@ -58,4 +54,24 @@ export const readCitasOrder = async(dateVar) =>{
     }
 
     return allCitas;
+}
+
+export const editCita = async(cita)=>{
+    try {
+        console.log(cita.id);
+        db.runAsync('UPDATE cita SET cliente= $cliente, detalle = $detalle, fecha= $fecha WHERE id = $id', cita.cliente, cita.detalle, cita.fecha, cita.id);
+        console.log("Cita modificada correctamente");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteCita = async(cita)=>{
+    try {
+        console.log(cita.id);
+        db.runAsync('DELETE FROM cita WHERE id = $id', {$id: cita.id});
+        console.log("Cita eliminada correctamente");
+    } catch (error) {
+        console.log(error);
+    }
 }

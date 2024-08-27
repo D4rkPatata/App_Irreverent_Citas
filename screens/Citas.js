@@ -1,28 +1,17 @@
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useEffect, useCallback  } from 'react'
 import { funcion, insertCita, readCitas, readCitasOrder } from '../Database';
+
 import { ListItem } from 'react-native-elements'
 import { useFocusEffect } from '@react-navigation/native';
+import { formatDateTime, toFormatDate } from '../DatesFunctions/DatesParses';
 
 
 
 export default function Citas(props) {
 
-  
+  const fecha = new Date();
 
-  //const citas= readCitasOrder("2024-07-12");
-  const list = [
-    {
-      name: 'Amy Farha',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-      subtitle: 'Vice President'
-    },
-    {
-      name: 'Chris Jackson',
-      avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-      subtitle: 'Vice Chairman'
-    },
-  ]
   
   
     const [citas, setCitas] = useState([]);
@@ -31,7 +20,8 @@ export default function Citas(props) {
     useFocusEffect(
       React.useCallback(() => {
         const fetchData = async () => {
-          const allCitas = await readCitasOrder("2024-07-12");
+          //const allCitas = await readCitasOrder(toFormatDate(fecha));
+          const allCitas = await readCitasOrder("2024-01-01 00:00");
           setCitas(allCitas);
         };
   
@@ -51,15 +41,18 @@ export default function Citas(props) {
 
       <View>
         {
-          citas.map((item, index) => (
+          citas.map((item, index) => {
+            const fechaFormat= formatDateTime(item.fecha);
+            return(
             <ListItem key={index} bottomDivider onPress={() => props.navigation.navigate('DetalleCita', {item})}>
               <ListItem.Content>
                 <ListItem.Title>{item.cliente}</ListItem.Title>
                 <ListItem.Subtitle numberOfLines={2}>{item.detalle}</ListItem.Subtitle>
-                <ListItem.Subtitle>{item.fecha}</ListItem.Subtitle>
+                <ListItem.Subtitle>{fechaFormat.fecha}</ListItem.Subtitle>
+                <ListItem.Subtitle>{fechaFormat.hora}</ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>
-          ))
+          );})
         }
       </View>
       
