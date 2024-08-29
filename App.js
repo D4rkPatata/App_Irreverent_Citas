@@ -9,7 +9,7 @@ import Calendario from './screens/Calendario';
 import Citas from './screens/Citas';
 import FormCitas from './screens/FormCitas';
 import DetalleCita from './screens/DetalleCita';
-import { createTables, funcion, readCitas, readCitasOrder } from './Database';
+import { createTables, funcion, readCitas, readCitasDia, readCitasOrder } from './Database';
 
 
 const Tab = createBottomTabNavigator();
@@ -49,7 +49,7 @@ function MyTabs() {
 
 export default function App() {
 
-  readCitasOrder("2024-07-12");
+  readCitasDia("2024-08-29");
   
   
   return (

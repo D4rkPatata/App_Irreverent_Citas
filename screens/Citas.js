@@ -1,6 +1,6 @@
 import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState, useEffect, useCallback  } from 'react'
-import { funcion, insertCita, readCitas, readCitasOrder } from '../Database';
+import { funcion, insertCita, readCitas, readCitasDia, readCitasOrder } from '../Database';
 
 import { ListItem } from 'react-native-elements'
 import { useFocusEffect } from '@react-navigation/native';
@@ -20,8 +20,8 @@ export default function Citas(props) {
     useFocusEffect(
       React.useCallback(() => {
         const fetchData = async () => {
-          //const allCitas = await readCitasOrder(toFormatDate(fecha));
-          const allCitas = await readCitasOrder("2024-01-01 00:00");
+          const allCitas = await readCitasOrder(toFormatDate(fecha));
+          //const allCitas = await readCitasDia("2024-08-29 00:00");
           setCitas(allCitas);
         };
   
@@ -92,4 +92,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  
 })

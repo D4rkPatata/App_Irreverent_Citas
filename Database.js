@@ -75,3 +75,15 @@ export const deleteCita = async(cita)=>{
         console.log(error);
     }
 }
+
+export const readCitasDia = async(fecha) =>{
+    try {
+        allCitas =  await db.getAllAsync('SELECT * FROM cita WHERE date(fecha) = date($fechaAct) ORDER BY fecha ASC', {$fechaAct: fecha});
+        allCitas.forEach(row =>{console.log(row.id, row.cliente);});
+        
+    } catch(error){
+        console.log(error);
+    }
+
+    return allCitas;
+}
