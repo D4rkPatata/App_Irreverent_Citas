@@ -49,7 +49,7 @@ function MyTabs() {
 
 export default function App() {
 
-  readCitasDia("2024-08-29");
+  createTables();
   
   
   return (
